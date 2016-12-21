@@ -1,9 +1,9 @@
 const _ = require('underscore');
-const bourne = require('bourne');
+const Bourne = require('bourne');
 const express = require('express');
 
 const movies = require('./data/movies.json');
-const Engine = require('./lib/engine/engine.js');
+const Engine = require('./lib/engine');
 
 const app = express();
 //
