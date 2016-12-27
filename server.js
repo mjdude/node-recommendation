@@ -8,6 +8,7 @@ const {Engine} = require('./lib/engine/engine.js');
 const app = express();
 
 const e = new Engine;
+e.likes.add('mo', 'Transformers: Age of Extinction');
 //
 // const {Rater} = require('./lib/engine/rater.js');
 // var rater = new Rater('engine', 'similars');
