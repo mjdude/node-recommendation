@@ -9,6 +9,7 @@ const app = express();
 
 const e = new Engine;
 e.likes.add('mo', 'Transformers: Age of Extinction');
+e.dislikes.add('jo', 'Batman v Superman');
 //
 // const {Rater} = require('./lib/engine/rater.js');
 // var rater = new Rater('engine', 'similars');
