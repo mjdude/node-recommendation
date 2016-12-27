@@ -3,12 +3,14 @@ const Bourne = require('bourne');
 const express = require('express');
 
 const movies = require('./data/movies.json');
-const Engine = require('./lib/engine/engine.js');
+const {Engine} = require('./lib/engine/engine.js');
 
 const app = express();
 
-const {Rater} = require('./lib/engine/rater.js');
-var rater = new Rater('engine', 'similars');
+const e = new Engine;
+//
+// const {Rater} = require('./lib/engine/rater.js');
+// var rater = new Rater('engine', 'similars');
 
 // rater.add('mo', 'abc');
 // rater.remove('mo', 'abc');
