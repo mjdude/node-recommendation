@@ -9,9 +9,18 @@ const app = express();
 
 const e = new Engine;
 // e.likes.add('mo', 'Transformers: Age of Extinction');
-e.likes.remove('mo', 'Transformers: Age of Extinction');
+// e.likes.add('jo', 'Transformers: Age of Extinction');
+// e.likes.add('jo', 'Guardians of the Galaxy');
 
+// e.likes.add('ho', 'Transformers: Age of Extinction');
 
+// e.likes.remove('mo', 'Transformers: Age of Extinction');
+
+e.likes.itemsByUser('jo').then((res) => {
+  return(res);
+});
+
+// e.similars.update('jo');
 // e.dislikes.add('jo', 'Batman v Superman');
 //
 // const {Rater} = require('./lib/engine/rater.js');
