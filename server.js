@@ -16,11 +16,11 @@ const e = new Engine;
 
 // e.likes.remove('mo', 'Transformers: Age of Extinction');
 
-e.likes.itemsByUser('jo').then((res) => {
-  return(res);
-});
+// e.likes.itemsByUser('jo').then((res) => {
+//   return(res);
+// });
 
-// e.similars.update('jo');
+e.similars.update('jo');
 // e.dislikes.add('jo', 'Batman v Superman');
 //
 // const {Rater} = require('./lib/engine/rater.js');
