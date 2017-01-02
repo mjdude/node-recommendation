@@ -10,21 +10,22 @@ const app = express();
 const e = new Engine;
 
 // // e.likes.add('mo', 'Transformers: Age of Extinction');
-e.likes.add('mo', "5");
-e.likes.add('mo', "4");
-e.likes.add('mo', "3");
-e.likes.add('mo', "1");
-e.likes.add('mo', "2");
-e.dislikes.add('mo', "7");
-e.likes.add('jo', "5");
-e.likes.add('jo', "4");
-e.likes.add('jo', "3");
-e.likes.add('ho', "1");
-e.likes.add('ho', "2");
-e.dislikes.add('jo', "7");
-e.likes.add('jo', "2");
+// e.likes.add('mo', "5");
+// e.likes.add('mo', "4");
+// e.likes.add('mo', "3");
+// e.likes.add('mo', "1");
+// e.likes.add('mo', "2");
+// e.dislikes.add('mo', "7");
+// e.likes.add('jo', "5");
+// e.likes.add('jo', "4");
+// e.likes.add('jo', "3");
+// e.likes.add('ho', "1");
+// e.likes.add('ho', "2");
+// e.dislikes.add('jo', "7");
+// e.likes.add('jo', "2");
 // e.likes.add('mo', "1");
 
+e.similars.update('mo');
 // e.suggestions.forUser('mo');
 // e.similars.byUser('jo').then((res) => {
 //   console.log(res);
