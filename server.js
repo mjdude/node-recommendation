@@ -25,12 +25,12 @@ const e = new Engine;
 // e.likes.add('jo', "2");
 // e.likes.add('mo', "1");
 
-e.similars.update('mo');
+// e.similars.update('mo');
 // e.suggestions.forUser('mo');
 // e.similars.byUser('jo').then((res) => {
 //   console.log(res);
 // });
-// e.suggestions.update('ho');
+e.suggestions.update('ho');
 
 
  // console.log(e.similars.byUser('jo'));
