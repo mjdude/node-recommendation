@@ -23,6 +23,18 @@ app.route('/refresh').post(({query}, res, next) => {
 
 });
 
+app.route('/like').post(({query}, res, next) => {
+  if (query.unset === 'yes') {
+    e.likes.remove(query.user, query.movie)
+    .then(() => {
+      res.redirect(`/?user=${query.user}`);
+    });
+  } else {
+    e.dislikes.remove(query.user, query.movie)
+    e.likes.add(query.user, query.movie);
+    res.redirect(`/?user=${query.user}`);
+  }
+})
 
 
 app.route('/').get(({query}, res, next) => {
@@ -43,7 +55,7 @@ app.route('/').get(({query}, res, next) => {
         id: suggestion.item
       });
     })
-    console.log(`likes, dislikes, suggestions ${likes} ${dislikes} ${suggestions}`);
+    console.log(`likes, dislikes, suggestions ${likes} ${dislikes} ${suggestions.slice(0,4)}`);
   }).then(() => {
       res.render('index',
       {
@@ -51,7 +63,7 @@ app.route('/').get(({query}, res, next) => {
         user: query.user,
         likes: likes,
         dislikes: dislikes,
-        suggestions: suggestions,
+        suggestions: suggestions.slice(0, 4),
     }
   );
   })
