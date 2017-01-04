@@ -36,6 +36,19 @@ app.route('/like').post(({query}, res, next) => {
   }
 })
 
+app.route('dislike').post(({query}, res, next) => {
+  if (query.unset === 'yes') {
+    e.dislikes.remove(query.user, query.movie)
+    .then(() => {
+      res.redirect(`/?user=${query.user}`);
+    });
+  } else {
+    e.likes.remove(query.user, query.movie)
+    e.dislikes.add(query.user, query.movie);
+    res.redirect(`/?user=${query.user}`);
+  }
+})
+
 
 app.route('/').get(({query}, res, next) => {
   let likes, dislikes, suggestions;
