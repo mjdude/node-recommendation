@@ -18,8 +18,6 @@ app.route('/refresh').post(({query}, res, next) => {
   e.similars.update(query.user)
   .then(() => {
     e.suggestions.update(query.user)
-  })
-  .then(() => {
     res.redirect(`/?user=${query.user}`);
   });
 
