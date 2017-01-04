@@ -5,25 +5,80 @@ const express = require('express');
 const movies = require('./data/movies.json');
 const {Engine} = require('./lib/engine/engine.js');
 
+const e = new Engine;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
-const e = new Engine;
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+
+app.route('/refresh').post(({query}, res, next) => {
+  console.log('calling refresh');
+
+  e.similars.update(query.user)
+  .then(() => {
+    e.suggestions.update(query.user)
+  })
+  .then(() => {
+    res.redirect(`/?user=${query.user}`);
+  });
+
+});
+
+
+
+app.route('/').get(({query}, res, next) => {
+  let likes, dislikes, suggestions;
+  console.log(`Calling main route with query ${query}`);
+  Promise.all([
+    e.likes.itemsByUser(query.user),
+    e.dislikes.itemsByUser(query.user),
+  ]).then((raterResults) => {
+    likes= raterResults[0];
+    dislikes = raterResults[1];
+
+    suggestions = e.suggestions.forUser(query.user);
+    suggestions = _.map(_.sortBy(suggestions, function(suggestion) {
+      return -suggestion.weight;
+    }), function(suggestion) {
+      return _.findWhere(movies, {
+        id: suggestion.item
+      });
+    })
+    console.log(`likes, dislikes, suggestions ${likes} ${dislikes} ${suggestions}`);
+  }).then(() => {
+      res.render('index',
+      {
+        movies: movies,
+        user: query.user,
+        likes: likes,
+        dislikes: dislikes,
+        suggestions: suggestions,
+    }
+  );
+  })
+})
+
+app.listen(PORT, () => {
+  console.log(`Express server running on port ${PORT}`);
+});
+
 
 // // e.likes.add('mo', 'Transformers: Age of Extinction');
-e.likes.add('mo', "5");
-e.likes.add('mo', "4");
-e.likes.add('mo', "3");
-e.likes.add('mo', "1");
-e.likes.add('mo', "2");
-e.dislikes.add('mo', "7");
-e.likes.add('jo', "5");
-e.likes.add('jo', "4");
-e.likes.add('jo', "3");
-e.likes.add('ho', "1");
-e.likes.add('ho', "2");
-e.dislikes.add('jo', "7");
-e.likes.add('jo', "2");
-e.likes.add('mo', "1");
+// e.likes.add('mo', "5");
+// e.likes.add('mo', "4");
+// e.likes.add('mo', "3");
+// e.likes.add('mo', "1");
+// e.likes.add('mo', "2");
+// e.dislikes.add('mo', "7");
+// e.likes.add('jo', "5");
+// e.likes.add('jo', "4");
+// e.likes.add('jo', "3");
+// e.likes.add('ho', "1");
+// e.likes.add('ho', "2");
+// e.dislikes.add('jo', "7");
+// e.likes.add('jo', "2");
+// e.likes.add('mo', "1");
 
 // e.similars.update('mo');
 // e.suggestions.forUser('mo');
