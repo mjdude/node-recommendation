@@ -36,7 +36,7 @@ app.route('/like').post(({query}, res, next) => {
   }
 })
 
-app.route('dislike').post(({query}, res, next) => {
+app.route('/dislike').post(({query}, res, next) => {
   if (query.unset === 'yes') {
     e.dislikes.remove(query.user, query.movie)
     .then(() => {
@@ -52,23 +52,25 @@ app.route('dislike').post(({query}, res, next) => {
 
 app.route('/').get(({query}, res, next) => {
   let likes, dislikes, suggestions;
-  console.log(`Calling main route with query ${query}`);
+  console.log(`Calling main route with query`, query);
   Promise.all([
     e.likes.itemsByUser(query.user),
     e.dislikes.itemsByUser(query.user),
+    e.suggestions.forUser(query.user)
   ]).then((raterResults) => {
     likes= raterResults[0];
     dislikes = raterResults[1];
+    suggestions = raterResults[2];
+      // console.log(`suggestions from forUser is`, suggestions);
+      suggestions = _.map(_.sortBy(suggestions,(suggestion) => {
+        return -suggestion.weight;
+      }), (suggestion)  => {
+          return _.findWhere(movies, {
+          id: suggestion.item
+        });
+      })
+      // console.log(`likes is ${likes}, dislikes is ${dislikes} , suggestions is ` , suggestions);
 
-    suggestions = e.suggestions.forUser(query.user);
-    suggestions = _.map(_.sortBy(suggestions, function(suggestion) {
-      return -suggestion.weight;
-    }), function(suggestion) {
-      return _.findWhere(movies, {
-        id: suggestion.item
-      });
-    })
-    console.log(`likes, dislikes, suggestions ${likes} ${dislikes} ${suggestions.slice(0,4)}`);
   }).then(() => {
       res.render('index',
       {
@@ -79,7 +81,9 @@ app.route('/').get(({query}, res, next) => {
         suggestions: suggestions.slice(0, 4),
     }
   );
-  })
+}).catch((err) => {
+  console.log(`Error in promise chain is `, err);
+})
 })
 
 app.listen(PORT, () => {
