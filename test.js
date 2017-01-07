@@ -8,15 +8,23 @@ const {Engine} = require('./lib/engine/engine.js');
 const e = new Engine;
 
 
-e.suggestions.forUser('ho').then((suggestions) => {
-  console.log('result is ', suggestions);
-  suggestions = _.map(_.sortBy(suggestions,(suggestion) => {
-    return -suggestion.weight;
-  }), (suggestion)  => {
-      return _.findWhere(movies, {
-      id: suggestion.item
-    });
-  })
+// e.suggestions.forUser('ho').then((suggestions) => {
+//   console.log('result is ', suggestions);
+//   suggestions = _.map(_.sortBy(suggestions,(suggestion) => {
+//     return -suggestion.weight;
+//   }), (suggestion)  => {
+//       return _.findWhere(movies, {
+//       id: suggestion.item
+//     });
+//   })
+//
+//   console.log('new suggestions is', suggestions);
+// })
 
-  console.log('new suggestions is', suggestions);
-})
+e.suggestions.update('mo')
+// .then((res) => {
+//   console.log(res);
+// })
+// .catch((err) => {
+//   console.log(err);
+// });

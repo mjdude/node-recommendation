@@ -69,7 +69,12 @@ app.route('/').get(({query}, res, next) => {
           id: suggestion.item
         });
       })
-      // console.log(`likes is ${likes}, dislikes is ${dislikes} , suggestions is ` , suggestions);
+
+      console.log('movies is ', movies);
+      console.log('user is ', query.user);
+      console.log('likes is ', likes);
+      console.log('dislikes is ', dislikes);
+      console.log('suggestions is ', suggestions.slice(0, 4));
 
   }).then(() => {
       res.render('index',
@@ -83,6 +88,8 @@ app.route('/').get(({query}, res, next) => {
   );
 }).catch((err) => {
   console.log(`Error in promise chain is `, err);
+
+  return(next, err);
 })
 })
 
